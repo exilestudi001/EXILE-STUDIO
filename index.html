@@ -628,6 +628,10 @@
       UNAUTHORIZED ACCESS ATTEMPTS ARE LOGGED AND REPORTED.
     </p>
 
+    <div style="border: 1px solid #555; padding: 12px 16px; margin: 20px 0; background: #050505;">
+      <a onclick="openProtocol()" style="color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; cursor: crosshair; display: inline-block;">→ VIEW ARCHIVE PROTOCOL (CLASSIFIED)</a>
+    </div>
+
     <!-- FORM -->
     <form class="form-block" id="form-block"
           name="exile-access-list"
@@ -646,6 +650,10 @@
         <span class="input-prefix">SMS&gt;&nbsp;&nbsp;</span>
         <input type="tel" id="phone-input" name="phone" placeholder="[ ENTER MOBILE CHANNEL ]" autocomplete="off" spellcheck="false">
       </div>
+      <div style="display: flex; align-items: center; gap: 8px; margin: 12px 0;">
+        <input type="checkbox" id="sms-consent" name="sms_consent" value="yes" style="width: 16px; height: 16px; cursor: pointer;">
+        <label for="sms-consent" style="font-size: 9px; color: #888; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin: 0;">AUTHORIZE SMS TRANSMISSIONS</label>
+      </div>
       <button type="submit" id="submit-btn">
         <span>[ REQUEST_AUTHORIZATION ]</span>
       </button>
@@ -663,7 +671,11 @@
       <span class="coords-label">// ORIGIN NODE</span>
       <span class="coords-value">35.7796° N, 78.6382° W // RALEIGH, NORTH CAROLINA</span>
     </div>
-    <a class="archive-trigger" onclick="openProtocol()">// VIEW ARCHIVE PROTOCOL →</a>
+    
+    <div style="border: 2px solid #555; padding: 24px; margin: 32px 0; background: #050505; cursor: crosshair;" onclick="openProtocol()">
+      <p style="margin: 0; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; font-weight: 700;">→ CLASSIFIED FILE ACCESSIBLE</p>
+      <p style="margin: 8px 0 0 0; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #888;">Click to view archive protocol + article status grid</p>
+    </div>
   </main>
 
 
@@ -881,7 +893,20 @@
   document.getElementById('email-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') e.preventDefault();
   });
-  document.getElementById('phone-input').addEventListener('keydown', (e) => {
+  
+  const phoneInput = document.getElementById('phone-input');
+  phoneInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 0 && !value.startsWith('1')) {
+      value = '1' + value;
+    }
+    if (value.length > 0) {
+      value = '+' + value;
+    }
+    e.target.value = value;
+  });
+  
+  phoneInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') e.preventDefault();
   });
 
